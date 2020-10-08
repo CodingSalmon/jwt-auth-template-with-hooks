@@ -52,5 +52,4 @@ const LoginPage = ({history, handleSignupOrLogin}) => {
   );
 }
 
-
 export default LoginPage;

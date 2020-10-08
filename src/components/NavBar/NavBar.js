@@ -33,8 +33,6 @@ const NavBar = ({ user, handleLogout }) => {
       </nav>
     </>
 
-
-
   return (
     nav
   );

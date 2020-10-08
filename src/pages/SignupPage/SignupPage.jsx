@@ -9,7 +9,6 @@ const SignupPage = ({history, handleSignupOrLogin}) => {
     setMessage(msg)
   }
 
-  
   return (
     <div className='SignupPage'>
       <SignupForm 
