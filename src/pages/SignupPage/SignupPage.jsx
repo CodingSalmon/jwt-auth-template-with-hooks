@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import SignupForm from '../../components/SignupForm/SignupForm';
+
 import './SignupPage.css';
 
 const SignupPage = ({history, handleSignupOrLogin}) => {

@@ -47,9 +47,11 @@ function login(creds) {
   .then(({token}) => tokenService.setToken(token));
 }
 
-export default {
+let functions = {
   signup,
   getUser,
   logout,
   login
 };
+
+export default functions

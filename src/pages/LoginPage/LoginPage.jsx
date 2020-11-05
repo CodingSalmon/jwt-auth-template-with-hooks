@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './LoginPage.css';
+
 import userService from '../../services/userService';
+
+import './LoginPage.css';
 
 const LoginPage = ({history, handleSignupOrLogin}) => {
 
