@@ -13,7 +13,7 @@ const NavBar = ({ user, handleLogout }) => {
               <Link to={`/user/${user._id}`}>Welcome, {user.name}</Link>
             </li>
             <li>
-              <a href=" " onClick={handleLogout}>Log Out</a>
+              <Link to=" " onClick={handleLogout}>Log Out</Link>
             </li>
           </ul>
         </div>
@@ -25,10 +25,10 @@ const NavBar = ({ user, handleLogout }) => {
         <div className="nav-wrapper">
           <ul className="right">
             <li>
-              <a href="/login">Log In</a>
+              <Link to="/login">Log In</Link>
             </li>
             <li>
-              <a href="/signup">Sign Up</a>
+              <Link to="/signup">Sign Up</Link>
             </li>
           </ul>
         </div>
