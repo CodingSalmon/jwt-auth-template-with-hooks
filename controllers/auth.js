@@ -102,28 +102,6 @@ function forgotPassword(req, res) {
   })
 }
 
-function testNodemailer(req, res) {
-  
-    let transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-              user: 'testtestersontesting117@gmail.com',
-              pass: process.env.GOOGLE_APP_PW
-          },
-    });
-    transporter.sendMail({
-          from: 'noreply@helloworld.com',
-          to: req.body.email,
-          subject: `test`,
-          text: `test`
-    }, (err, info) => {
-      if (err) res.json(err.message)
-      res.json(info)
-    })
-}
-
 async function updatePassword(req, res) {
   const {token, password} = req.body
   if (token) {
