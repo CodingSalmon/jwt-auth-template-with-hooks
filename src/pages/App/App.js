@@ -5,6 +5,8 @@ import NavBar from "../../components/NavBar/NavBar";
 
 import LoginPage from '../LoginPage/LoginPage';
 import SignupPage from '../SignupPage/SignupPage';
+import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
+import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
 
 import userService from '../../services/userService';
 
@@ -22,6 +24,11 @@ const App = () => {
     setUser(userService.getUser());
   };
 
+  const determineError = (msg) => {
+    if (msg.includes('Error')) return 'red-text'
+    return 'green-text'
+  }
+
   return (
     <>
       <NavBar 
@@ -35,6 +42,7 @@ const App = () => {
             <LoginPage 
               history={history}
               handleSignupOrLogin={handleSignupOrLogin}
+              determineError={determineError}
             />
           </>
         }></Route>
@@ -44,6 +52,23 @@ const App = () => {
             <SignupPage 
               history={history}
               handleSignupOrLogin={handleSignupOrLogin}
+              determineError={determineError}
+            />
+          </>
+        }></Route>
+
+        <Route exact path='/forgot' render={() => 
+          <>
+            <ForgotPasswordPage 
+              determineError={determineError}
+            />
+          </>
+        }></Route>
+
+        <Route path='/resetpassword/:token' render={() => 
+          <>
+            <ResetPasswordPage 
+              determineError={determineError}
             />
           </>
         }></Route>

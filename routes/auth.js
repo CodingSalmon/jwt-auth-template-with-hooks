@@ -4,7 +4,9 @@ const authCtrl = require('../controllers/auth');
 
 router.post('/signup', authCtrl.signup);
 router.post('/login', authCtrl.login);
+router.put('/forgot-password', authCtrl.forgotPassword)
 router.get('/user/:id', authCtrl.show);
+router.put('/reset-password', authCtrl.updatePassword)
 
 router.use(require('../config/auth'));
 

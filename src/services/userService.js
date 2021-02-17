@@ -30,28 +30,52 @@ function logout() {
 }
 
 function login(creds) {
-  console.log(creds)
   return fetch(BASE_URL + 'login', {
     method: 'POST',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(creds)
   })
-  .then(res => {
-    return res.json();
-  })
+  .then(res => res.json())
   .then(json => {
     if(json.token) return json;
-    console.log(json, '<-- the error')
     throw new Error(`${json.err || json.message}`)
   })
   .then(({token}) => tokenService.setToken(token));
+}
+
+function forgotPassword(email) {
+  return fetch(BASE_URL + 'forgot-password', {
+    method: 'PUT',
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify({email})
+  })
+  .then(res => res.json())
+  .then(json => {
+    if (json.message) return json
+    throw new Error(`${json.error}`)
+  })
+}
+
+function resetPassword(password, token) {
+  return fetch(BASE_URL + 'reset-password',{
+    method:'PUT',
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify({password, token})
+  })
+  .then(res => res.json())
+  .then(json => {
+    if(json.message) return json
+    throw new Error(`${json.error}`)
+  })
 }
 
 let functions = {
   signup,
   getUser,
   logout,
-  login
+  login,
+  forgotPassword,
+  resetPassword
 };
 
 export default functions
