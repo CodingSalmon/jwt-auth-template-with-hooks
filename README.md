@@ -19,7 +19,7 @@ cd jwt-auth-template-with-hooks
 npm i
 ```
 
-#### 3. Create a .env file and add values for the database URL and mongoDB connection string.
+#### 3. Create a .env file and add values for the database URL, mongoDB connection string, a key for signing tokens to securely reset passwords, your client's url, and login info for a google account that does not have 2FA enabled. (nodemailer will not work with 2FA enabled)
 
 ```
 touch .env
@@ -30,4 +30,6 @@ DATABASE_URL=XXXXXXXXXXXXXXXXXXXXXXXX
 SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXX
 CLIENT_URL=http://localhost:3000
 RESET_PASSWORD_KEY=XXXXXXXXXXXXXXXXX
+GOOGLE_APP_EMAIL=XXXXXXXXXXXXXXXX
+GOOGLE_APP_PW=XXXXXXXXXXXXXXXXXX
 ```

@@ -1,9 +1,7 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const mailgun = require('mailgun-js')
-const DOMAIN = 'sandbox3f4ea34ee68e484e8b6578a80f633d33.mailgun.org'
-const mg = mailgun({apiKey:process.env.MAILGUN_API_KEY, domain: DOMAIN})
 const SECRET = process.env.SECRET;
+const nodemailer = require('nodemailer')
 
 module.exports = {
   signup,
@@ -68,6 +66,16 @@ function forgotPassword(req, res) {
     }
     
     const token = jwt.sign({_id: user._id}, process.env.RESET_PASSWORD_KEY, {expiresIn: '15m'})
+
+    let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+              user: process.env.GOOGLE_APP_EMAIL,
+              pass: process.env.GOOGLE_APP_PW
+          },
+    });
     
     const data = {
       from:'noreply@helloworld.com',
@@ -83,9 +91,8 @@ function forgotPassword(req, res) {
       if (err) {
         return res.status(400).json({error: 'reset password link error'})
       } else {
-        mg.messages().send(data, function(error, body) {
+        transporter.sendMail(data, function(error, body) {
           if (error) {
-            console.log('couldnt send email')
             return res.status(400).json({error: error.message})
           }
           return res.status(200).json({message: 'Email has been sent, please follow the instructions'})
@@ -93,6 +100,28 @@ function forgotPassword(req, res) {
       }
     })
   })
+}
+
+function testNodemailer(req, res) {
+  
+    let transporter = nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true,
+          auth: {
+              user: 'testtestersontesting117@gmail.com',
+              pass: process.env.GOOGLE_APP_PW
+          },
+    });
+    transporter.sendMail({
+          from: 'noreply@helloworld.com',
+          to: req.body.email,
+          subject: `test`,
+          text: `test`
+    }, (err, info) => {
+      if (err) res.json(err.message)
+      res.json(info)
+    })
 }
 
 async function updatePassword(req, res) {
