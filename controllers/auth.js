@@ -78,7 +78,6 @@ function forgotPassword(req, res) {
     });
     
     const data = {
-      from:'noreply@helloworld.com',
       to: email,
       subject: 'Reset Account Password Link',
       html: `
