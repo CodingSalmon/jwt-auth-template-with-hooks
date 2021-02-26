@@ -6,7 +6,7 @@
         "@testing-library/jest-dom": "^5.11.5",
         "@testing-library/react": "^11.1.1",
         "@testing-library/user-event": "^12.2.0",
-        "bcrypt": "^5.0.0",
+        "bcrypt": "^5.0.1",
         "cors": "^2.8.5",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^5.10.12",
