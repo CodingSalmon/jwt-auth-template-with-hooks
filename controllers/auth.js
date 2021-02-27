@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET;
 const nodemailer = require('nodemailer')
 
 module.exports = {
@@ -14,7 +13,7 @@ module.exports = {
 function createJWT(user) {
   return jwt.sign(
     {user},
-    SECRET,
+    process.env.SECRET,
     {expiresIn: '24h'}
   );
 }
@@ -59,46 +58,50 @@ function show(req, res) {
 }
 
 function forgotPassword(req, res) {
-  const email = req.body.email
-  User.findOne({email}, (err, user) => {
-    if (err || !user) {
-      return res.status(400).json({error: 'User with this email already exists'})
-    }
-    
-    const token = jwt.sign({_id: user._id}, process.env.RESET_PASSWORD_KEY, {expiresIn: '15m'})
-
-    let transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-              user: process.env.GOOGLE_APP_EMAIL,
-              pass: process.env.GOOGLE_APP_PW
-          },
-    });
-    
-    const data = {
-      to: email,
-      subject: 'Reset Account Password Link',
-      html: `
-      <h3>Please click the link below to reset your password</h3>
-      <p>${process.env.CLIENT_URL}/resetpassword/${token}</p>
-      `,
-    }
-    
-    return user.updateOne({resetLink: token}, (err, user) => {
-      if (err) {
-        return res.status(400).json({error: 'reset password link error'})
-      } else {
-        transporter.sendMail(data, function(error, body) {
-          if (error) {
-            return res.status(400).json({error: error.message})
-          }
-          return res.status(200).json({message: 'Email has been sent, please follow the instructions'})
-        })
+  if(process.env.GOOGLE_APP_EMAIL && process.env.GOOGLE_APP_PW) {
+    const email = req.body.email
+    User.findOne({email}, (err, user) => {
+      if (err || !user) {
+        return res.status(400).json({error: 'User with this email already exists'})
       }
+      
+      const token = jwt.sign({_id: user._id}, process.env.RESET_PASSWORD_KEY, {expiresIn: '15m'})
+  
+      let transporter = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.GOOGLE_APP_EMAIL,
+                pass: process.env.GOOGLE_APP_PW
+            },
+      });
+      
+      const data = {
+        to: email,
+        subject: 'Reset Account Password Link',
+        html: `
+        <h3>Please click the link below to reset your password</h3>
+        <p>${process.env.CLIENT_URL}/resetpassword/${token}</p>
+        `,
+      }
+      
+      return user.updateOne({resetLink: token}, (err, user) => {
+        if (err) {
+          return res.status(400).json({error: 'reset password link error'})
+        } else {
+          transporter.sendMail(data, function(error, body) {
+            if (error) {
+              return res.status(400).json({error: error.message})
+            }
+            return res.status(200).json({message: 'Email has been sent, please follow the instructions'})
+          })
+        }
+      })
     })
-  })
+  } else{
+    return res.status(400).json({error: 'You have not set up an account to send an email or a reset password key for jwt'})
+  }
 }
 
 async function updatePassword(req, res) {
