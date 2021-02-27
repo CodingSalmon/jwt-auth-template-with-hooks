@@ -33,3 +33,9 @@ RESET_PASSWORD_KEY=XXXXXXXXXXXXXXXXX
 GOOGLE_APP_EMAIL=XXXXXXXXXXXXXXXX
 GOOGLE_APP_PW=XXXXXXXXXXXXXXXXXX
 ```
+
+#### 4. Reset the origin remote so you can push to your own repo.
+
+```
+git remote set-url origin <your repo's url with .git at the end>
+```

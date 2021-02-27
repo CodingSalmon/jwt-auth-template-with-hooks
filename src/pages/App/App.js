@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Switch } from 'react-router-dom';
 
 import NavBar from "../../components/NavBar/NavBar";
@@ -9,6 +9,7 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
 
 import userService from '../../services/userService';
+import tokenService from '../../services/tokenService'
 
 import "./App.css";
 
@@ -28,6 +29,10 @@ const App = () => {
     if (msg.includes('Error')) return 'red-text'
     return 'green-text'
   }
+
+  useEffect(() => {
+    setUser(tokenService.getUserFromToken())
+  },[])
 
   return (
     <>
