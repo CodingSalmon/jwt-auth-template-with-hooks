@@ -4,9 +4,10 @@ import userService from "../../services/userService"
 
 import "./ForgotPasswordPage.css"
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage = ({ determineError }) => {
     const [email, setEmail] = useState("")
     const [message, setMessage] = useState("")
+    const [color, setColor] = useState("")
 
     const handleChange = (e) => {
         setEmail(e.target.value)
@@ -16,8 +17,10 @@ const ForgotPasswordPage = () => {
         e.preventDefault()
         try {
             const response = await userService.forgotPassword(email)
+            setColor(determineError(response.message))
             setMessage(response.message)
         } catch (err) {
+            setColor(determineError(err.message))
             setMessage(`Error: ${err.message}`)
         }
     }
@@ -53,7 +56,7 @@ const ForgotPasswordPage = () => {
                 <div className="row">
                     <Link to="/login">Return to Login</Link>
                 </div>
-                <p className="red-text">{message}</p>
+                <p className={color}>{message}</p>
             </div>
         </div>
     )

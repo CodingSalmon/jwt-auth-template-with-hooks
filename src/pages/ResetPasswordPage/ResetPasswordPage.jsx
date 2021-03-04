@@ -24,11 +24,11 @@ const ResetPasswordPage = ({ determineError }) => {
                 newPassword.password,
                 token
             )
-            setMessage(response.message)
             setColor(determineError(response.message))
+            setMessage(response.message)
         } catch (err) {
-            setMessage(`Error: ${err.message}`)
             setColor(determineError(err.message))
+            setMessage(`Error: ${err.message}`)
         }
     }
 

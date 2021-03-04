@@ -9,7 +9,6 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
 
 import userService from '../../services/userService';
-import tokenService from '../../services/tokenService'
 
 import "./App.css";
 
@@ -31,7 +30,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    setUser(tokenService.getUserFromToken())
+    setUser(userService.getUser())
   },[])
 
   return (

@@ -26,12 +26,12 @@ touch .env
 ```
 
 ```
-DATABASE_URL=XXXXXXXXXXXXXXXXXXXXXXXX
-SECRET=XXXXXXXXXXXXXXXXXXXXXXXXXXX
-CLIENT_URL=http://localhost:3000
-RESET_PASSWORD_KEY=XXXXXXXXXXXXXXXXX
-GOOGLE_APP_EMAIL=XXXXXXXXXXXXXXXX
-GOOGLE_APP_PW=XXXXXXXXXXXXXXXXXX
+DATABASE_URL=<your MongoDB connection string>
+SECRET=<any string>
+CLIENT_URL=http://localhost:3000 (note: When deploying change this to your site's url)
+RESET_PASSWORD_KEY=<any string>
+GOOGLE_APP_EMAIL=<google account email>
+GOOGLE_APP_PW=<google account password>
 ```
 
 #### 4. Reset the origin remote so you can push to your own repo.

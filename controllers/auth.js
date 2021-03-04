@@ -62,7 +62,7 @@ function forgotPassword(req, res) {
     const email = req.body.email
     User.findOne({email}, (err, user) => {
       if (err || !user) {
-        return res.status(400).json({error: 'User with this email already exists'})
+        return res.status(400).json({error: 'User with this email does not exist'})
       }
       
       const token = jwt.sign({_id: user._id}, process.env.RESET_PASSWORD_KEY, {expiresIn: '15m'})
@@ -88,7 +88,7 @@ function forgotPassword(req, res) {
       
       return user.updateOne({resetLink: token}, (err, user) => {
         if (err) {
-          return res.status(400).json({error: 'reset password link error'})
+          return res.status(400).json({error: 'Reset password link error'})
         } else {
           transporter.sendMail(data, function(error, body) {
             if (error) {
