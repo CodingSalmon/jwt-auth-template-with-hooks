@@ -7,6 +7,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import SignupPage from '../SignupPage/SignupPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
+import UserPage from '../UserPage/UserPage'
 
 import userService from '../../services/userService';
 
@@ -41,6 +42,12 @@ const App = () => {
       />
 
       <Switch>
+        <Route path='/user/:id' render={() => 
+          <>
+            <UserPage />
+          </>
+        }></Route>
+
         <Route exact path="/login" render={({history}) => 
           <>
             <LoginPage 

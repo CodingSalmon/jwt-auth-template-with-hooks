@@ -54,7 +54,7 @@ async function login(req, res) {
 
 function show(req, res) {
   User.findById(req.params.id)
-  .then(res => res.json());
+  .then(user => res.json(user));
 }
 
 function forgotPassword(req, res) {
@@ -104,7 +104,7 @@ function forgotPassword(req, res) {
   }
 }
 
-async function updatePassword(req, res) {
+function updatePassword(req, res) {
   const {token, password} = req.body
   if (token) {
     jwt.verify(token, process.env.RESET_PASSWORD_KEY, function(error, decodedData) {
