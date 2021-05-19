@@ -6,8 +6,11 @@ module.exports = {
   signup,
   login,
   show,
+  getAllUsers,
   forgotPassword,
   updatePassword,
+  follow,
+  unfollow
 };
 
 function createJWT(user) {
@@ -55,6 +58,11 @@ async function login(req, res) {
 function show(req, res) {
   User.findById(req.params.id)
   .then(user => res.json(user));
+}
+
+function getAllUsers(req, res) {
+  User.find({})
+  .then(users => res.json(users))
 }
 
 function forgotPassword(req, res) {
@@ -129,4 +137,12 @@ function updatePassword(req, res) {
   } else {
     return res.status(401).json({error: "Authentication Error"})
   }
+}
+
+async function follow(req, res) {
+
+}
+
+async function unfollow(req, res) {
+
 }
