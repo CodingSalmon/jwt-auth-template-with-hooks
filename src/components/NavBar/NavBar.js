@@ -10,6 +10,12 @@ const NavBar = ({ user, handleLogout }) => {
         <div className="nav-wrapper">
           <ul className="right">
             <li>
+              <Link to={`/search`}>Search</Link>
+            </li>
+            <li>
+              <Link to={`/users`}>All Users</Link>
+            </li>
+            <li>
               <Link to={`/user/${user._id}`}>Welcome, {user.name}</Link>
             </li>
             <li>
@@ -24,6 +30,12 @@ const NavBar = ({ user, handleLogout }) => {
       <nav className="nav-bar">
         <div className="nav-wrapper">
           <ul className="right">
+            <li>
+              <Link to={`/search`}>Search</Link>
+            </li>
+            <li>
+              <Link to={`/users`}>All Users</Link>
+            </li>
             <li>
               <Link to="/login">Log In</Link>
             </li>

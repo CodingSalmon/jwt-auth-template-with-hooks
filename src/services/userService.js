@@ -7,11 +7,8 @@ function signup(user) {
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(user)
   })
-  .then(res => {
-    console.log(res, '<-- response object')
-    return res.json();
-  })
-  .then(json => {
+  .then(async res => {
+    const json = await res.json()
     if(json.token) return json;
     throw new Error(`${json.err || json.message}`)
   })
@@ -34,8 +31,8 @@ function login(creds) {
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(creds)
   })
-  .then(res => res.json())
-  .then(json => {
+  .then(async res => {
+    const json = await res.json()
     if(json.token) return json;
     throw new Error(`${json.err || json.message}`)
   })
@@ -49,14 +46,21 @@ function getUserFromId(id) {
   .then(res => res.json())
 }
 
+function getAllUsers() {
+  return fetch(BASE_URL + 'users', {
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
+  .then(res => res.json())
+}
+
 function forgotPassword(email) {
   return fetch(BASE_URL + 'forgot-password', {
     method: 'PUT',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify({email})
   })
-  .then(res => res.json())
-  .then(json => {
+  .then(async res => {
+    const json = await res.json()
     if (json.message) return json
     throw new Error(`${json.error}`)
   })
@@ -68,11 +72,39 @@ function resetPassword(password, token) {
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify({password, token})
   })
-  .then(res => res.json())
-  .then(json => {
+  .then(async res => {
+    const json = await res.json()
     if(json.message) return json
     throw new Error(`${json.error}`)
   })
+}
+
+function follow(follower, following) {
+  return fetch(BASE_URL + `follow/${follower}/${following}`, {
+    headers: new Headers({'Content-Type': 'application/json'}),
+  })
+  .then(res => res.json())
+}
+
+function unfollow(unfollower, unfollowing) {
+  return fetch(BASE_URL + `unfollow/${unfollower}/${unfollowing}`, {
+    headers: new Headers({'Content-Type': 'application/json'}),
+  })
+  .then(res => res.json())
+}
+
+function favorite(placeId) {
+  return fetch(BASE_URL + `favorite/${placeId}`, {
+    headers: new Headers({'Content-Type': 'application/json'}),
+  })
+  .then(res => res.json())
+}
+
+function unfavorite(placeId) {
+  return fetch(BASE_URL + `unfavorite/${placeId}`, {
+    headers: new Headers({'Content-Type': 'application/json'}),
+  })
+  .then(res => res.json())
 }
 
 let functions = {
@@ -82,7 +114,12 @@ let functions = {
   login,
   getUserFromId,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  getAllUsers,
+  follow,
+  unfollow,
+  favorite,
+  unfavorite,
 };
 
 export default functions

@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   email: {type: String, required: true, lowercase: true, unique: true},
   password: {type: String},
   resetLink: {data: String, default: ''},
+  favorites: [{type: String}],
   followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   following: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
 }, {

@@ -6,11 +6,13 @@ module.exports = {
   signup,
   login,
   show,
-  getAllUsers,
+  getUsers,
   forgotPassword,
   updatePassword,
   follow,
-  unfollow
+  unfollow,
+  favorite,
+  unfavorite
 };
 
 function createJWT(user) {
@@ -57,10 +59,12 @@ async function login(req, res) {
 
 function show(req, res) {
   User.findById(req.params.id)
+  .populate('following')
+  .populate('followers')
   .then(user => res.json(user));
 }
 
-function getAllUsers(req, res) {
+function getUsers(req, res) {
   User.find({})
   .then(users => res.json(users))
 }
@@ -139,10 +143,50 @@ function updatePassword(req, res) {
   }
 }
 
-async function follow(req, res) {
+function follow(req, res) {
+  User.findById(req.params.follower)
+  .then(user => {
+    user.following.push(req.params.following)
+    user.save()
+  })
 
+  User.findById(req.params.following)
+  .then(user => {
+    user.followers.push(req.params.follower)
+    user.save()
+    return res.json(user)
+  })
 }
 
 async function unfollow(req, res) {
+  User.findById(req.params.unfollower)
+  .then(user => {
+    user.following = user.following.filter(val => val !== req.params.unfollowing)
+    user.save()
+  })
+  
+  User.findById(req.params.unfollowing)
+  .then(user => {
+    user.followers = user.followers.filter(val => val !== req.params.unfollower)
+    user.save()
+    return res.json(user)
+  })
+}
 
+function favorite(req, res) {
+  User.findById(req.user._id)
+  .then(user => {
+    user.favorites.push(req.params.placeId)
+    user.save()
+    return res.json(user)
+  })
+}
+
+function unfavorite(req, res) {
+  User.findById(req.user._id)
+  .then(user => {
+    user.favorites = user.favorites.filter(val => val !== req.params.placeId)
+    user.save()
+    return res.json(user)
+  })
 }

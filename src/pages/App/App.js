@@ -8,6 +8,9 @@ import SignupPage from '../SignupPage/SignupPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
 import UserPage from '../UserPage/UserPage'
+import UsersPage from '../UsersPage/UsersPage'
+import SearchPage from '../SearchPage/SearchPage'
+import RestaurantPage from '../RestaurantPage/RestaurantPage'
 
 import userService from '../../services/userService';
 
@@ -42,9 +45,27 @@ const App = () => {
       />
 
       <Switch>
+        <Route path='/search' render={() => 
+          <>
+            <SearchPage />
+          </>
+        }></Route>
+
+        <Route path='/restaurant/:placeId' render={() => 
+          <>
+            <RestaurantPage user={user}/>
+          </>
+        }></Route>
+
         <Route path='/user/:id' render={() => 
           <>
-            <UserPage />
+            <UserPage loggedInUser={user}/>
+          </>
+        }></Route>
+
+        <Route path='/users' render={() => 
+          <>
+            <UsersPage />
           </>
         }></Route>
 

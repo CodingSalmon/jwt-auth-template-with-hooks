@@ -3,5 +3,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
+}
+
+.follow-area {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
 }
