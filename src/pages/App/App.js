@@ -33,6 +33,17 @@ const App = () => {
     return 'green-text'
   }
 
+  const handleFavoriteChange = async (type, id) => {
+    if(type === 'f') {
+      const newUser = await userService.favorite(id)
+      setUser(newUser)
+    }
+    if(type === 'u') {
+      const newUser = await userService.unfavorite(id)
+      setUser(newUser)
+    }
+  } 
+
   useEffect(() => {
     setUser(userService.getUser())
   },[])
@@ -53,7 +64,7 @@ const App = () => {
 
         <Route path='/restaurant/:placeId' render={() => 
           <>
-            <RestaurantPage user={user}/>
+            <RestaurantPage user={user} handleFavoriteChange={handleFavoriteChange}/>
           </>
         }></Route>
 

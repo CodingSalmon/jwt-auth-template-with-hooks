@@ -7,11 +7,12 @@
 .search {
     display: flex;
     align-items: center;
-    width: 60vw;
+    width: 45vw;
+    margin: 25px 0 50px 0;
 }
 
-.search > input {
-    margin-right: 60px;
+.search button {
+    margin-left: 15px;
 }
 
 .restaurant {
@@ -19,9 +20,30 @@
     flex-direction: column;
     justify-content: space-around;
     margin: 20px 0;
-    height: 125px;
     width: 45vw;
     border-radius: 5px;
     border: 2px black solid;
-    padding: 0 12px;
+    padding: 12px 12px;
+}
+
+#restaurants {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 20px;
+}
+
+.loading {
+    height: 200px;
+}
+
+@media (min-width: 1000px) {
+    #restaurants {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .restaurant {
+        width: 25vw;
+    }
 }

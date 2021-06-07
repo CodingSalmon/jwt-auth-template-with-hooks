@@ -75,9 +75,12 @@ const LoginForm = ({ history, handleSignupOrLogin, updateMessage }) => {
                     </div>
                 </div>
             </form>
-            <div className="row">
-                <Link to="/forgot">Forgot Password</Link>
-            </div>
+            <Link to="/forgot" className="row">
+                Forgot Password
+            </Link>
+            <Link to="/signup" className="row">
+                New? Sign Up
+            </Link>
         </div>
     )
 }

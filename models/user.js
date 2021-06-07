@@ -7,10 +7,7 @@ const userSchema = new mongoose.Schema({
   name: {type: String},
   email: {type: String, required: true, lowercase: true, unique: true},
   password: {type: String},
-  resetLink: {data: String, default: ''},
-  favorites: [{type: String}],
-  followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-  following: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+  resetLink:{data: String, default: ''},
 }, {
   timestamps: true
 });

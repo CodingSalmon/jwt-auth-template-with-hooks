@@ -13,3 +13,8 @@ export function getRestaurantDetails(placeId) {
     return axios.get(`${CORS}${BASE_URL}details/json?place_id=${placeId}&key=${key}`)
     .catch((err) => console.log(err));
 }
+
+export function getRestaurantPhoto(ref) {
+    return axios.get(`${CORS}${BASE_URL}photo?maxwidth=400&photoreference=${ref}&key=${key}`)
+    .catch((err) => console.log(err));
+}
