@@ -8,9 +8,6 @@ import SignupPage from '../SignupPage/SignupPage';
 import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
 import UserPage from '../UserPage/UserPage'
-import UsersPage from '../UsersPage/UsersPage'
-import SearchPage from '../SearchPage/SearchPage'
-import RestaurantPage from '../RestaurantPage/RestaurantPage'
 
 import userService from '../../services/userService';
 
@@ -33,17 +30,6 @@ const App = () => {
     return 'green-text'
   }
 
-  const handleFavoriteChange = async (type, id) => {
-    if(type === 'f') {
-      const newUser = await userService.favorite(id)
-      setUser(newUser)
-    }
-    if(type === 'u') {
-      const newUser = await userService.unfavorite(id)
-      setUser(newUser)
-    }
-  } 
-
   useEffect(() => {
     setUser(userService.getUser())
   },[])
@@ -56,27 +42,9 @@ const App = () => {
       />
 
       <Switch>
-        <Route path='/search' render={() => 
-          <>
-            <SearchPage />
-          </>
-        }></Route>
-
-        <Route path='/restaurant/:placeId' render={() => 
-          <>
-            <RestaurantPage user={user} handleFavoriteChange={handleFavoriteChange}/>
-          </>
-        }></Route>
-
         <Route path='/user/:id' render={() => 
           <>
-            <UserPage loggedInUser={user}/>
-          </>
-        }></Route>
-
-        <Route path='/users' render={() => 
-          <>
-            <UsersPage />
+            <UserPage />
           </>
         }></Route>
 
