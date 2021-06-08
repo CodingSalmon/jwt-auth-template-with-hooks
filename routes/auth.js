@@ -10,6 +10,8 @@ router.get('/users', authCtrl.getUsers)
 router.put('/reset-password', authCtrl.updatePassword)
 
 router.use(require('../config/auth'));
+router.get('/follow/:follower/:following', checkAuth, authCtrl.follow)
+router.get('/unfollow/:unfollower/:unfollowing', checkAuth, authCtrl.unfollow)
 
 function checkAuth(req, res, next) {
     if (req.user) return next();
