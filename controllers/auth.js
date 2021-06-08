@@ -10,7 +10,7 @@ module.exports = {
   forgotPassword,
   updatePassword,
   follow,
-  unfollow
+  unfollow,
 };
 
 function createJWT(user) {
@@ -139,10 +139,32 @@ function updatePassword(req, res) {
   }
 }
 
-async function follow(req, res) {
+function follow(req, res) {
+  User.findById(req.params.follower)
+  .then(user => {
+    user.following.push(req.params.following)
+    user.save()
+  })
 
+  User.findById(req.params.following)
+  .then(user => {
+    user.followers.push(req.params.follower)
+    user.save()
+    return res.json(user)
+  })
 }
 
-async function unfollow(req, res) {
-
+function unfollow(req, res) {
+  User.findById(req.params.unfollower)
+  .then(user => {
+    user.following = user.following.filter(val => val !== req.params.unfollowing)
+    user.save()
+  })
+  
+  User.findById(req.params.unfollowing)
+  .then(user => {
+    user.followers = user.followers.filter(val => val !== req.params.unfollower)
+    user.save()
+    return res.json(user)
+  })
 }

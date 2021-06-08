@@ -6,6 +6,7 @@ router.post('/signup', authCtrl.signup);
 router.post('/login', authCtrl.login);
 router.put('/forgot-password', authCtrl.forgotPassword)
 router.get('/user/:id', authCtrl.show);
+router.get('/users', authCtrl.getUsers)
 router.put('/reset-password', authCtrl.updatePassword)
 
 router.use(require('../config/auth'));

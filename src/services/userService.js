@@ -49,6 +49,13 @@ function getUserFromId(id) {
   .then(res => res.json())
 }
 
+function getAllUsers() {
+  return fetch(BASE_URL + 'users', {
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
+  .then(res => res.json())
+}
+
 function forgotPassword(email) {
   return fetch(BASE_URL + 'forgot-password', {
     method: 'PUT',
@@ -75,14 +82,31 @@ function resetPassword(password, token) {
   })
 }
 
+function follow(follower, following) {
+  return fetch(BASE_URL + `follow/${follower}/${following}`, {
+    headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenService.getToken()}),
+  })
+  .then(res => res.json())
+}
+
+function unfollow(unfollower, unfollowing) {
+  return fetch(BASE_URL + `unfollow/${unfollower}/${unfollowing}`, {
+    headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenService.getToken()}),
+  })
+  .then(res => res.json())
+}
+
 let functions = {
   signup,
   getUser,
+  getUserFromId,
+  getAllUsers,
   logout,
   login,
-  getUserFromId,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  follow,
+  unfollow,
 };
 
 export default functions
