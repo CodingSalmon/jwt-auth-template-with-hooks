@@ -1,4 +1,37 @@
-.nav-bar {
-  background-color: rgb(62, 220, 152);
-  height: 85px;
+nav {
+  background-color: rgb(49, 52, 57);
+  height: 64px;
+}
+
+nav > ul > li {
+  height:64px;
+}
+
+nav > ul > li > a {
+  height: 64px;
+}
+
+.logo {
+  margin-top: 8px;
+  margin-left: 15px;
+  height: 48px;
+}
+
+.dropdownMenu {
+  display:table;
+  width: inherit;
+}
+
+.dropdownMenu > li:hover {
+  background-color: rgb(46, 47, 51);
+}
+.dropdownMenu > li > a{
+  vertical-align: middle;
+  background-color: rgb(49, 52, 57);
+  line-height: 36px;
+}
+
+
+.dropdown-trigger > a > i {
+  height: 64px;
 }

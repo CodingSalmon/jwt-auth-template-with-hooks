@@ -7,10 +7,7 @@ function signup(user) {
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(user)
   })
-  .then(res => {
-    console.log(res, '<-- response object')
-    return res.json();
-  })
+  .then(res => res.json())
   .then(json => {
     if(json.token) return json;
     throw new Error(`${json.err || json.message}`)

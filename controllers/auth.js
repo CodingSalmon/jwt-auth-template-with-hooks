@@ -6,7 +6,7 @@ module.exports = {
   signup,
   login,
   show,
-  getAllUsers,
+  getUsers,
   forgotPassword,
   updatePassword,
   follow,
@@ -60,7 +60,7 @@ function show(req, res) {
   .then(user => res.json(user));
 }
 
-function getAllUsers(req, res) {
+function getUsers(req, res) {
   User.find({})
   .then(users => res.json(users))
 }
