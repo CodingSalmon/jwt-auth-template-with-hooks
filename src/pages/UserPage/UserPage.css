@@ -5,3 +5,9 @@
     align-items: center;
     margin-bottom: 50px;
 }
+
+#follow-area {
+    display:flex; 
+    justify-content: space-around;
+    width: 60vw;
+}

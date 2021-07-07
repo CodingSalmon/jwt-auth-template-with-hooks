@@ -40,6 +40,10 @@ const UserPage = ({loggedInUser}) => {
                         <div className='btn blue' onClick={unfollow}>Unfollow</div>
                         :<div className='btn blue' onClick={follow}>Follow</div>
                     :''}
+                    <div id='follow-area'>
+                        <p>Following: {user.following.length}</p>
+                        <p>Followers: {user.followers.length}</p>
+                    </div>
                 </>
             :''}
         </div>
