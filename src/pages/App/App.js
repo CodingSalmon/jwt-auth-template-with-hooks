@@ -51,7 +51,7 @@ const App = () => {
       <Switch>
         <Route path={['/user/:id/followers', '/user/:id/following']} render={() => 
           <>
-            <FollowListPage />
+            <FollowListPage users={users}/>
           </>
         }></Route>
 

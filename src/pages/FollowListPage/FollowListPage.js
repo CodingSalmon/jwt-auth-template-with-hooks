@@ -4,7 +4,7 @@ import userService from '../../services/userService'
 
 import './FollowListPage.css'
 
-const FollowListPage = () => {
+const FollowListPage = ({users}) => {
     const [followList, setFollowList] = useState([])
     
     const {id} = useParams()
@@ -33,7 +33,7 @@ const FollowListPage = () => {
                     <div className='user-button-area'>
                         <div>
                             <p>Following: {currentUser.following.length}</p>
-                            {/* <p>Followers: {currentUser.followers.length}</p> */}
+                            <p>Followers: {users.filter(curUser => curUser.following.includes(currentUser._id)).length}</p>
                         </div>
                         <Link to={`/user/${currentUser._id}`} className='btn grey darken-2'>Details</Link>
                     </div>
