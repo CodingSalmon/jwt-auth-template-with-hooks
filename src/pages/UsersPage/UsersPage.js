@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import userService from '../../services/userService'
 
 import './UsersPage.css'
 
-const UsersPage = () => {
-    const [users, setUsers] = useState([])
-
-    useEffect(() => {
-        (async () => {
-            const currentUsers = await userService.getAllUsers()
-            setUsers(currentUsers)
-        })()
-    }, [])
-
+const UsersPage = ({users}) => {
     return (
         <div className='UsersPage'>
             <h3>All Users</h3>
@@ -22,6 +12,10 @@ const UsersPage = () => {
                     <div>Name: {currentUser.name}</div>
                     <div>Email: {currentUser.email}</div>
                     <div className='user-button-area'>
+                        <div>
+                            <p>Following: {currentUser.following.length}</p>
+                            <p>Followers: {users.filter(curUser => curUser.following.includes(currentUser._id)).length}</p>
+                        </div>
                         <Link to={`/user/${currentUser._id}`} className='btn grey darken-2'>Details</Link>
                     </div>
                 </div>

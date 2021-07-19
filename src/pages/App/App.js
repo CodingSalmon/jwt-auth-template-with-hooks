@@ -9,6 +9,7 @@ import ForgotPasswordPage from '../ForgotPasswordPage/ForgotPasswordPage'
 import ResetPasswordPage from '../ResetPasswordPage/ResetPasswordPage'
 import UserPage from '../UserPage/UserPage'
 import UsersPage from '../UsersPage/UsersPage'
+import FollowListPage from '../FollowListPage/FollowListPage'
 
 import userService from '../../services/userService';
 
@@ -16,6 +17,7 @@ import "./App.css";
 
 const App = () => {
   const [user, setUser] = useState('');
+  const [users, setUsers] = useState([])
 
   const handleLogout = () => {
     userService.logout();
@@ -32,7 +34,11 @@ const App = () => {
   }
 
   useEffect(() => {
-    setUser(userService.getUser())
+    (async () => {
+      setUser(userService.getUser())
+      const currentUsers = await userService.getAllUsers()
+      setUsers(currentUsers)
+    })()
   },[])
 
   return (
@@ -43,15 +49,25 @@ const App = () => {
       />
 
       <Switch>
+        <Route path={['/user/:id/followers', '/user/:id/following']} render={() => 
+          <>
+            <FollowListPage />
+          </>
+        }></Route>
+
         <Route path='/user/:id' render={() => 
           <>
-            <UserPage loggedInUser={user}/>
+            <UserPage 
+              loggedInUser={user} 
+              users={users}
+              setLoggedInUser={setUser}
+            />
           </>
         }></Route>
 
         <Route path='/users' render={() => 
           <>
-            <UsersPage />
+            <UsersPage users={users}/>
           </>
         }></Route>
 

@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: space-around;
     margin: 20px 0;
-    height: 125px;
+    height: 145px;
     width: 45vw;
     border-radius: 5px;
     border: 2px black solid;
@@ -19,5 +19,10 @@
 
 .user-button-area {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-button-area > div > p {
+    margin: 0;
 }

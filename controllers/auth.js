@@ -1,16 +1,12 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
 
 module.exports = {
   signup,
   login,
-  show,
-  getUsers,
   forgotPassword,
   updatePassword,
-  follow,
-  unfollow,
 };
 
 function createJWT(user) {
@@ -53,16 +49,6 @@ async function login(req, res) {
   } catch (err) {
     return res.status(401).json(err);
   }
-}
-
-function show(req, res) {
-  User.findById(req.params.id)
-  .then(user => res.json(user));
-}
-
-function getUsers(req, res) {
-  User.find({})
-  .then(users => res.json(users))
 }
 
 function forgotPassword(req, res) {
@@ -137,34 +123,4 @@ function updatePassword(req, res) {
   } else {
     return res.status(401).json({error: "Authentication Error"})
   }
-}
-
-function follow(req, res) {
-  User.findById(req.params.follower)
-  .then(user => {
-    user.following.push(req.params.following)
-    user.save()
-  })
-
-  User.findById(req.params.following)
-  .then(user => {
-    user.followers.push(req.params.follower)
-    user.save()
-    return res.json(user)
-  })
-}
-
-function unfollow(req, res) {
-  User.findById(req.params.unfollower)
-  .then(user => {
-    user.following = user.following.filter(val => val !== req.params.unfollowing)
-    user.save()
-  })
-  
-  User.findById(req.params.unfollowing)
-  .then(user => {
-    user.followers = user.followers.filter(val => val !== req.params.unfollower)
-    user.save()
-    return res.json(user)
-  })
 }

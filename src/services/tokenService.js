@@ -29,7 +29,7 @@ function removeToken() {
     localStorage.removeItem('token');
 }
 
-let functions = {
+const functions = {
     setToken,
     getToken,
     getUserFromToken,

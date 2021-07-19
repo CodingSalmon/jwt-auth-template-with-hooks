@@ -1,21 +1,6 @@
 import tokenService from '../services/tokenService';
-const BASE_URL = '/api/auth/';
-
-function signup(user) {
-  return fetch(BASE_URL + 'signup', {
-    method: 'POST',
-    headers: new Headers({'Content-Type': 'application/json'}),
-    body: JSON.stringify(user)
-  })
-  .then(res => res.json())
-  .then(json => {
-    if(json.token) return json;
-    throw new Error(`${json.err || json.message}`)
-  })
-  .then(({ token }) => {
-    tokenService.setToken(token);
-  });
-}
+const AUTH_URL = '/api/auth/';
+const USER_URL = '/api/users/';
 
 function getUser() {
   return tokenService.getUserFromToken();
@@ -25,8 +10,22 @@ function logout() {
   tokenService.removeToken();
 }
 
+function signup(user) {
+  return fetch(AUTH_URL + 'signup', {
+    method: 'POST',
+    headers: new Headers({'Content-Type': 'application/json'}),
+    body: JSON.stringify(user)
+  })
+  .then(res => res.json())
+  .then(json => {
+    if(json.token) return json;
+    throw new Error(`${json.err || json.message}`)
+  })
+  .then(({ token }) => tokenService.setToken(token));
+}
+
 function login(creds) {
-  return fetch(BASE_URL + 'login', {
+  return fetch(AUTH_URL + 'login', {
     method: 'POST',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify(creds)
@@ -39,22 +38,8 @@ function login(creds) {
   .then(({token}) => tokenService.setToken(token));
 }
 
-function getUserFromId(id) {
-  return fetch(BASE_URL + 'user/' + id, {
-    headers: new Headers({'Content-Type': 'application/json'})
-  })
-  .then(res => res.json())
-}
-
-function getAllUsers() {
-  return fetch(BASE_URL + 'users', {
-    headers: new Headers({'Content-Type': 'application/json'})
-  })
-  .then(res => res.json())
-}
-
 function forgotPassword(email) {
-  return fetch(BASE_URL + 'forgot-password', {
+  return fetch(AUTH_URL + 'forgot-password', {
     method: 'PUT',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify({email})
@@ -67,7 +52,7 @@ function forgotPassword(email) {
 }
 
 function resetPassword(password, token) {
-  return fetch(BASE_URL + 'reset-password',{
+  return fetch(AUTH_URL + 'reset-password',{
     method:'PUT',
     headers: new Headers({'Content-Type': 'application/json'}),
     body: JSON.stringify({password, token})
@@ -79,21 +64,40 @@ function resetPassword(password, token) {
   })
 }
 
-function follow(follower, following) {
-  return fetch(BASE_URL + `follow/${follower}/${following}`, {
-    headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenService.getToken()}),
+function getAllUsers() {
+  return fetch(USER_URL, {
+    headers: new Headers({'Content-Type': 'application/json'})
   })
   .then(res => res.json())
 }
 
-function unfollow(unfollower, unfollowing) {
-  return fetch(BASE_URL + `unfollow/${unfollower}/${unfollowing}`, {
-    headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenService.getToken()}),
+function getUserFromId(id) {
+  return fetch(USER_URL + id, {
+    headers: new Headers({'Content-Type': 'application/json'})
   })
   .then(res => res.json())
 }
 
-let functions = {
+function handleFollow(follower, following) {
+  return fetch(USER_URL + `follow/${follower}/${following}`, {
+    headers: new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tokenService.getToken()}),
+  })
+  .then(res => res.json())
+  .then(json => {
+    if(json.token) return json;
+    throw new Error(`${json.err || json.message}`)
+  })
+  .then(({token}) => tokenService.setToken(token));
+}
+
+function getFollowList(id, type) {
+  return fetch(USER_URL + `user/${id}/${type}`, {
+    headers: new Headers({'Content-Type': 'application/json'})
+  })
+  .then(res => res.json())
+}
+
+const functions = {
   signup,
   getUser,
   getUserFromId,
@@ -102,8 +106,8 @@ let functions = {
   login,
   forgotPassword,
   resetPassword,
-  follow,
-  unfollow,
+  handleFollow,
+  getFollowList,
 };
 
 export default functions
