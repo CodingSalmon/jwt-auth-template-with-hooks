@@ -16,7 +16,7 @@ import userService from '../../services/userService';
 import "./App.css";
 
 const App = () => {
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
   const [users, setUsers] = useState([])
 
   const handleLogout = () => {

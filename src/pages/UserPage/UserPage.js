@@ -42,20 +42,23 @@ const UserPage = ({loggedInUser, setLoggedInUser, users}) => {
                     :''}
                     <div id='follow-area'>
                         <p><Link to={`/user/${user._id}/following`}>Following: {user.following.length}</Link></p>
-                        <p><Link to={`/user/${user._id}/followers`}>Followers: 
-                            {
-                            // Check if loggedInUser Follows User who's page we are on
-                            users.filter(curUser => curUser.following.includes(user._id)).some(u => u._id === loggedInUser._id) ? 
-                            // Recalculate if user has followed after page load
-                                loggedInUser.following.includes(user._id) ? 
-                                    users.filter(curUser => curUser.following.includes(user._id)).length
-                                    : --users.filter(curUser => curUser.following.includes(user._id)).length
-                            // Recalculate if user has followed after page load
-                            : loggedInUser.following.includes(user._id) ? 
-                                ++users.filter(curUser => curUser.following.includes(user._id)).length
-                                : users.filter(curUser => curUser.following.includes(user._id)).length
-                            }
-                        </Link></p>
+                        <p>
+                            <Link to={`/user/${user._id}/followers`}>Followers: 
+                                {loggedInUser ? 
+                                // Check if loggedInUser Follows User who's page we are on
+                                    users.filter(curUser => curUser.following.includes(user._id)).some(u => u._id === loggedInUser._id) ? 
+                                    // Recalculate if user has followed after page load
+                                        loggedInUser.following.includes(user._id) ? 
+                                            users.filter(curUser => curUser.following.includes(user._id)).length
+                                            : --users.filter(curUser => curUser.following.includes(user._id)).length
+                                    // Recalculate if user has followed after page load
+                                    : loggedInUser.following.includes(user._id) ? 
+                                        ++users.filter(curUser => curUser.following.includes(user._id)).length
+                                        : users.filter(curUser => curUser.following.includes(user._id)).length
+                                :users.filter(curUser => curUser.following.includes(user._id)).length
+                                }
+                            </Link>
+                        </p>
                     </div>
                 </>
             :''}
